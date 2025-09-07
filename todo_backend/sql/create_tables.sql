@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS users (
+	id TEXT PRIMARY KEY,
+	firebase_user_id TEXT UNIQUE NOT NULL,
+	email TEXT UNIQUE NOT NULL,
+	name TEXT,
+	avatar_url TEXT,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS todos (
+	id TEXT PRIMARY KEY,
+	title TEXT NOT NULL,
+	description TEXT,
+	is_completed BOOLEAN DEFAULT FALSE,
+	created_by_id TEXT NOT NULL,
+	completed_at TIMESTAMP,
+	completed_by_id TEXT,
+
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (created_by_id) REFERENCES users(id) ON DELETE CASCADE
+	FOREIGN KEY (completed_by_id) REFERENCES users(id) ON DELETE CASCADE
+);
